@@ -1,6 +1,6 @@
 'use client';
 
-import { FileText, Download, Trash2 } from "lucide-react";
+import { FileText, Download, Trash2, Github } from "lucide-react";
 import { useState } from "react";
 import Dropzone from "@/components/Dropzone";
 import PageGrid from "@/components/PageGrid";
@@ -92,7 +92,34 @@ export default function Home() {
           </div>
         </div>
 
-        <div style={{ display: "flex", gap: "1rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          <a
+            href="https://github.com/wsjwong/rearrange-pdf-pages-free"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "40px",
+              height: "40px",
+              borderRadius: "8px",
+              color: "var(--text-secondary)",
+              transition: "all 0.2s ease",
+              cursor: "pointer"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--text-primary)";
+              e.currentTarget.style.background = "var(--surface-hover)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--text-secondary)";
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            <Github size={24} />
+          </a>
+
           {pages.length > 0 && (
             <>
               <button

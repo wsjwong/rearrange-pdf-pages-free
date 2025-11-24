@@ -2,6 +2,12 @@
   "name": "rearrange-pdf-pages-free",
   "version": "0.1.0",
   "private": true,
+  "description": "A free, privacy-focused web app for rearranging, merging, and editing PDF pages. All processing happens entirely in your browser.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wsjwong/rearrange-pdf-pages-free"
+  },
+  "homepage": "https://pdf.simplemetrics.xyz",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
