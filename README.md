@@ -1,38 +1,43 @@
+# Rearrange PDF Pages Free
+
 ![App Screenshot](public/screenshot.png)
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A free, privacy-focused web app for rearranging, merging, and editing PDF pages. All processing happens entirely in your browser—no uploads, no servers, no data collection.
+
+## Features
+
+- 📄 **Upload multiple PDFs** and combine them into one document
+- 🔄 **Drag and drop** to reorder pages
+- 🗑️ **Delete unwanted pages** with a single click
+- 💾 **Download** your edited PDF instantly
+- 🔒 **100% client-side** - your files never leave your device
+- ⚡ **Fast and responsive** - built with Next.js and React
 
 ## Getting Started
 
-First, run the development server:
+### Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Deploy to Vercel with one click:
 
-## Learn More
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/wsjwong/rearrange-pdf-pages-free)
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Next.js 16** - React framework
+- **pdf-lib** - PDF manipulation
+- **react-pdf** - PDF rendering
+- **@dnd-kit** - Drag and drop functionality
+- **TypeScript** - Type safety
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
