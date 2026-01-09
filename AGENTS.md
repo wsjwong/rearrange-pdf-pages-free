@@ -19,3 +19,5 @@ Deployment
 - Recommended: Vercel.
 - Optional: `npm run deploy` publishes a static build from `out/` via `gh-pages`.
 
+Related repo
+../simplemetrics.xyz/ — Astro main site for “AI for Sheets” (landing/blog/help/legal).
