@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -66,6 +67,13 @@ export default function RootLayout({
             </div>
           </footer>
         </div>
+        {process.env.NODE_ENV === "production" ? (
+          <Script
+            src="https://analytics.simplemetrics.xyz/script.js"
+            data-website-id="8da5816a-73f5-4dcf-8008-1f637cb3fe44"
+            strategy="afterInteractive"
+          />
+        ) : null}
       </body>
     </html>
   );
