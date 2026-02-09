@@ -2,6 +2,7 @@
 
 import { Upload, FilePlus } from 'lucide-react';
 import { useState, useRef } from 'react';
+import { INPUT_ACCEPT_ATTRIBUTE, isSupportedInputFile } from '@/lib/file-types';
 
 interface DropzoneProps {
     onUpload: (files: File[]) => void;
@@ -26,22 +27,22 @@ export default function Dropzone({ onUpload, compact = false }: DropzoneProps) {
         setIsDragging(false);
 
         if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            const pdfFiles = Array.from(e.dataTransfer.files).filter(
-                (file) => file.type === 'application/pdf'
+            const supportedFiles = Array.from(e.dataTransfer.files).filter(
+                isSupportedInputFile
             );
-            if (pdfFiles.length > 0) {
-                onUpload(pdfFiles);
+            if (supportedFiles.length > 0) {
+                onUpload(supportedFiles);
             }
         }
     };
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
-            const pdfFiles = Array.from(e.target.files).filter(
-                (file) => file.type === 'application/pdf'
+            const supportedFiles = Array.from(e.target.files).filter(
+                isSupportedInputFile
             );
-            if (pdfFiles.length > 0) {
-                onUpload(pdfFiles);
+            if (supportedFiles.length > 0) {
+                onUpload(supportedFiles);
             }
         }
         // Reset input
@@ -76,7 +77,7 @@ export default function Dropzone({ onUpload, compact = false }: DropzoneProps) {
                 type="file"
                 ref={fileInputRef}
                 onChange={handleFileSelect}
-                accept=".pdf"
+                accept={INPUT_ACCEPT_ATTRIBUTE}
                 multiple
                 style={{ display: 'none' }}
             />
@@ -96,7 +97,7 @@ export default function Dropzone({ onUpload, compact = false }: DropzoneProps) {
 
             <div style={{ textAlign: compact ? 'left' : 'center' }}>
                 <p style={{ fontWeight: 600, fontSize: compact ? '0.875rem' : '1.125rem' }}>
-                    {compact ? 'Add more PDFs' : 'Drop your PDF here'}
+                    {compact ? 'Add more files' : 'Drop your PDF or image here'}
                 </p>
                 {!compact && (
                     <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.5rem' }}>

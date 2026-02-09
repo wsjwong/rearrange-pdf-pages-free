@@ -4,7 +4,7 @@ import { FileText, Download, Trash2, Github } from "lucide-react";
 import { useState } from "react";
 import Dropzone from "@/components/Dropzone";
 import PageGrid from "@/components/PageGrid";
-import { loadPDF, mergePDFs, PDFPage } from "@/lib/pdf-utils";
+import { loadPDF, mergePDFs, PDFPage, PageSize } from "@/lib/pdf-utils";
 
 export default function Home() {
   const [pages, setPages] = useState<PDFPage[]>([]);
@@ -14,14 +14,25 @@ export default function Home() {
     setIsProcessing(true);
     try {
       const newPages: PDFPage[] = [];
+      let imagePageSize: PageSize | undefined = pages[0]
+        ? { width: pages[0].width, height: pages[0].height }
+        : undefined;
+
       for (const file of files) {
-        const filePages = await loadPDF(file);
+        const filePages = await loadPDF(file, { imagePageSize });
         newPages.push(...filePages);
+
+        if (!imagePageSize && filePages.length > 0) {
+          imagePageSize = {
+            width: filePages[0].width,
+            height: filePages[0].height,
+          };
+        }
       }
       setPages((prev) => [...prev, ...newPages]);
     } catch (error) {
-      console.error("Error loading PDF:", error);
-      alert("Failed to load PDF. Please try again.");
+      console.error("Error loading file:", error);
+      alert("Failed to load file. Use PDF or common image formats and try again.");
     } finally {
       setIsProcessing(false);
     }
@@ -47,7 +58,7 @@ export default function Home() {
     setIsProcessing(true);
     try {
       const pdfBytes = await mergePDFs(pages);
-      const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
