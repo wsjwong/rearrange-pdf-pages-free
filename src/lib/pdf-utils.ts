@@ -122,7 +122,9 @@ async function convertImageToPDFFile(file: File, targetPageSize?: PageSize): Pro
     });
 
     const pdfBytes = await pdfDoc.save();
-    return new File([pdfBytes], file.name, {
+    // Ensure we pass a view backed by a plain ArrayBuffer (not ArrayBufferLike) to File/Blob APIs.
+    const stableBytes = Uint8Array.from(pdfBytes);
+    return new File([stableBytes], file.name, {
         type: 'application/pdf',
         lastModified: file.lastModified,
     });
@@ -170,15 +172,17 @@ export async function loadPDF(
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
 
-            if (context) {
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+                if (context) {
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
 
-                const renderTask = page.render({
-                    canvasContext: context,
-                    viewport: viewport
-                });
-                await renderTask.promise;
+                    const renderTask = page.render({
+                        // Newer pdf.js typings require the canvas element in addition to its 2d context.
+                        canvas,
+                        canvasContext: context,
+                        viewport: viewport
+                    });
+                    await renderTask.promise;
 
                 thumbnails.push(canvas.toDataURL());
             } else {

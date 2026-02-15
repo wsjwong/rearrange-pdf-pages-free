@@ -52,17 +52,20 @@ export default function Home() {
     }
   };
 
-  const handleDownload = async () => {
-    if (pages.length === 0) return;
+	  const handleDownload = async () => {
+	    if (pages.length === 0) return;
 
-    setIsProcessing(true);
-    try {
-      const pdfBytes = await mergePDFs(pages);
-      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'edited-document.pdf';
+	    setIsProcessing(true);
+	    try {
+	      const pdfBytes = await mergePDFs(pages);
+	      // TS's DOM `BlobPart` typing rejects `Uint8Array<ArrayBufferLike>` (could be SharedArrayBuffer),
+	      // so copy into a fresh `Uint8Array` backed by a plain `ArrayBuffer`.
+	      const stableBytes = Uint8Array.from(pdfBytes);
+	      const blob = new Blob([stableBytes], { type: 'application/pdf' });
+	      const url = URL.createObjectURL(blob);
+	      const link = document.createElement('a');
+	      link.href = url;
+	      link.download = 'edited-document.pdf';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
